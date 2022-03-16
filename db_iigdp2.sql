@@ -23,6 +23,19 @@ INSERT INTO `conf_inicial` (`id_conf_inicial`, `code_conf_inicial`) VALUES
 	(1, 'inicio');
 /*!40000 ALTER TABLE `conf_inicial` ENABLE KEYS */;
 
+-- Copiando estrutura para tabela iigdpiedade2.empresa
+CREATE TABLE IF NOT EXISTS `empresa` (
+  `id_empresa` int(11) NOT NULL AUTO_INCREMENT,
+  `visao` varchar(50) DEFAULT NULL,
+  `missao` varchar(50) DEFAULT NULL,
+  `valores` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_empresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Copiando dados para a tabela iigdpiedade2.empresa: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
+
 -- Copiando estrutura para tabela iigdpiedade2.groups
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -37,6 +50,24 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 	(1, 'admin', 'Administrator'),
 	(2, 'members', 'General User');
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
+
+-- Copiando estrutura para tabela iigdpiedade2.insc_proc_sel
+CREATE TABLE IF NOT EXISTS `insc_proc_sel` (
+  `id_insc_proc_sel` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profissao` varchar(250) DEFAULT NULL,
+  `id_user_fk` int(11) unsigned NOT NULL,
+  `id_empresa_fk` int(11) DEFAULT NULL,
+  `result` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id_insc_proc_sel`),
+  KEY `id_user_fk` (`id_user_fk`),
+  KEY `id_empresa_fk` (`id_empresa_fk`),
+  CONSTRAINT `insc_proc_sel_ibfk_1` FOREIGN KEY (`id_user_fk`) REFERENCES `users` (`id`),
+  CONSTRAINT `insc_proc_sel_ibfk_2` FOREIGN KEY (`id_empresa_fk`) REFERENCES `empresa` (`id_empresa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Copiando dados para a tabela iigdpiedade2.insc_proc_sel: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `insc_proc_sel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `insc_proc_sel` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela iigdpiedade2.login_attempts
 CREATE TABLE IF NOT EXISTS `login_attempts` (
@@ -78,12 +109,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `uc_activation_selector` (`activation_selector`),
   UNIQUE KEY `uc_forgotten_password_selector` (`forgotten_password_selector`),
   UNIQUE KEY `uc_remember_selector` (`remember_selector`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela iigdpiedade2.users: ~15 rows (aproximadamente)
+-- Copiando dados para a tabela iigdpiedade2.users: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `email`, `activation_selector`, `activation_code`, `forgotten_password_selector`, `forgotten_password_code`, `forgotten_password_time`, `remember_selector`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `dtnascimento`, `cadinicial`) VALUES
-	(1, '127.0.0.1', 'administrator', '$2y$10$MdUOy6GU7s/5c0AVBOO1Ke/uI45aYjqX2kmIWMP5YPvjUwWmUO4DO', 'admin@admin.com', NULL, '', NULL, NULL, NULL, '0b35717102f1ccad0e0bb2d3ee95d6aaa1f9d009', '$2y$10$PU5KqYZQu5XO.9rIn8igR.dXMjSWP4hZiiX9foCA3P3W3abxYg9NC', 1268889823, 1646142659, 1, 'Admin', 'istrator', 'ADMIN', '0', NULL, NULL);
+	(1, '127.0.0.1', 'administrator', '$2y$10$MdUOy6GU7s/5c0AVBOO1Ke/uI45aYjqX2kmIWMP5YPvjUwWmUO4DO', 'admin@admin.com', NULL, '', NULL, NULL, NULL, '454096a4f905143097e8ad519708f2a92b97e613', '$2y$10$wC9m9GAg5g/47hbFFSPUlOlMZAyoLhocozNAt4I.DcZ22s6d9nD8.', 1268889823, 1646336645, 1, 'Admin', 'istrator', 'ADMIN', '0', NULL, NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela iigdpiedade2.users_groups
@@ -97,9 +128,9 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   KEY `fk_users_groups_groups1_idx` (`group_id`),
   CONSTRAINT `fk_users_groups_groups1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_groups_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela iigdpiedade2.users_groups: ~15 rows (aproximadamente)
+-- Copiando dados para a tabela iigdpiedade2.users_groups: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `users_groups` DISABLE KEYS */;
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 	(1, 1, 1);
